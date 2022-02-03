@@ -13,6 +13,6 @@ jobs:
         uses: php-actions/composer@master
         with:
           php_version: 7.4
-          version: 1
+          version: 2
       - name: Test
-        run: codeception run
+        run:  php vendor/bin/codecept run
