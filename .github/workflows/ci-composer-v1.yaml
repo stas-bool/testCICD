@@ -14,3 +14,5 @@ jobs:
         with:
           php_version: 7.4
           version: 1
+      - name: Test
+        run: vendor/bin/codeception run
