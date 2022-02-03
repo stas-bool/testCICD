@@ -33,5 +33,7 @@ jobs:
           username: ${{ secrets.SURV_USER }}
           key: ${{ secrets.SURV_SSH_KEY }}
           script: |
+            cd /var/www/html/
             git pull
             composer install
+            # php yii migrate --interactive=0
