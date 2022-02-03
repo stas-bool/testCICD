@@ -24,4 +24,5 @@ jobs:
           SOURCE: "./"
           REMOTE_HOST: ${{ secrets.SURV_HOST }}
           REMOTE_USER: ${{ secrets.SURV_USER }}
-          TARGET: ${{ secrets.REMOTE_TARGET }}
+          TARGET: "/var/www/html/"
+          EXCLUDE: "/vendor/"
