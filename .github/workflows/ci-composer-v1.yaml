@@ -16,13 +16,22 @@ jobs:
           version: 2
       - name: Test
         run:  php vendor/bin/codecept run
-      - name: Deploy
-        uses: easingthemes/ssh-deploy@main
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.SURV_SSH_KEY }}
-          ARGS: "-rltgoDzvO"
-          SOURCE: "./"
-          REMOTE_HOST: ${{ secrets.SURV_HOST }}
-          REMOTE_USER: ${{ secrets.SURV_USER }}
-          TARGET: "/var/www/html/"
-          EXCLUDE: "/vendor/"
+      # - name: Deploy
+      #   uses: easingthemes/ssh-deploy@main
+      #   env:
+      #     SSH_PRIVATE_KEY: ${{ secrets.SURV_SSH_KEY }}
+      #     ARGS: "-rltgoDzvO"
+      #     SOURCE: "./"
+      #     REMOTE_HOST: ${{ secrets.SURV_HOST }}
+      #     REMOTE_USER: ${{ secrets.SURV_USER }}
+      #     TARGET: "/var/www/html/"
+      #     EXCLUDE: "/vendor/"
+      - name: executing remote ssh commands using password
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SURV_HOST }}
+          username: ${{ secrets.SURV_USER }}
+          key: ${{ secrets.SURV_SSH_KEY }}
+          script: |
+            git pull
+            composer install
