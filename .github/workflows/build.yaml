@@ -12,8 +12,9 @@ jobs:
       - name: Install dependencies
         uses: php-actions/composer@master
         with:
-          php_version: 7.4
+          php_version: 8.0
           version: 2
+          command: composer update
       - name: Tests
         run:  php vendor/bin/codecept run
       - name: Update
