@@ -28,7 +28,7 @@ RUN apk update && \
 COPY entrypoint.sh /entrypoint.sh
 RUN mkdir /var/run/sshd && \
     echo 'root:cicd' | chpasswd && \
-    echo 'cicd:cicd' | chpasswd && \
+    echo 'www-data:cicd' | chpasswd && \
     sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config && \
     chmod +x /entrypoint.sh
 

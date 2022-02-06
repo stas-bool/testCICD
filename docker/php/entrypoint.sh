@@ -11,7 +11,7 @@ fi
 ls /tmp/xdebug.log && chmod 766 /tmp/xdebug.log
 
 cd /var/www/cicd/ && \
-chown -R cicd:cicd . && \
+chown -R www-data:www-data . && \
 find /var/www/ -type f -exec chmod 664 {} + && \
 find /var/www/ -type d -exec chmod 775 {} + && \
 composer install || composer update && \
