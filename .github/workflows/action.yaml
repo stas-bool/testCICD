@@ -1,4 +1,4 @@
-name: CI-composer-v1
+name: Main
 
 on: [push]
 
@@ -17,14 +17,14 @@ jobs:
           command: update
       - name: Tests
         run:  php vendor/bin/codecept run
-      - name: Update
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.SURV_HOST }}
-          username: ${{ secrets.SURV_USER }}
-          key: ${{ secrets.SURV_SSH_KEY }}
-          script: |
-            cd /var/www/html/
-            git pull
+#      - name: Update
+#        uses: appleboy/ssh-action@master
+#        with:
+#          host: ${{ secrets.SURV_HOST }}
+#          username: ${{ secrets.SURV_USER }}
+#          key: ${{ secrets.SURV_SSH_KEY }}
+#          script: |
+#            cd /var/www/html/
+#            git pull
 #            composer install || composer update
 #            php yii migrate --interactive=0
