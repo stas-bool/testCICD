@@ -1,4 +1,4 @@
-name: CI-composer-v1
+name: Main
 
 on: [push]
 
