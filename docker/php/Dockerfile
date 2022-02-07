@@ -19,6 +19,7 @@ RUN apk update && \
     openssl-dev \
     openssh-sftp-server \
     freetype-dev \
+    shadow \
      libzip-dev && \
     pecl install xdebug-3.1.3 && \
     docker-php-ext-configure gd --enable-gd --with-freetype && \
