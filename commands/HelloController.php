@@ -7,6 +7,7 @@
 
 namespace app\commands;
 
+use app\models\Test;
 use yii\console\Controller;
 use yii\console\ExitCode;
 
@@ -27,8 +28,9 @@ class HelloController extends Controller
      */
     public function actionIndex($message = 'hello world')
     {
-        echo $message . "\n";
-
+        $test = new Test();
+        $test->value = $message;
+        $test->save();
         return ExitCode::OK;
     }
 }

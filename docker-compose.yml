@@ -9,6 +9,9 @@ services:
     build:
       context: docker/php
       dockerfile: Dockerfile
+      args:
+        DEBUG: ${DEBUG}
+        XDEBUG_REMOTE_HOST: ${XDEBUG_REMOTE_HOST}
     volumes:
       - ./:/var/www/${APP_NAME}:rw
     ports:
