@@ -26,5 +26,3 @@ jobs:
           script: |
             cd /var/www/html/
             git pull
-            composer install || composer update
-            php yii migrate --interactive=0
