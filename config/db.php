@@ -2,11 +2,10 @@
 
 use yii\db\Connection;
 
-$source = getenv("DB_SOURCE");
-$host = getenv("DB_HOST");
+$host = getenv("POSTGRES_HOST");
 $dbName = getenv("DB_NAME");
-$user = getenv("DB_USER");
-$password = getenv("DB_PASSWORD");
+$user = getenv("POSTGRES_USER");
+$password = getenv("POSTGRES_PASSWORD");
 
 $db = [
     "class" => Connection::class,
