@@ -33,13 +33,12 @@ RUN chmod +x /entrypoint.sh
 ENTRYPOINT [ "/entrypoint.sh" ]
 
 RUN if [[ ${DEBUG} == "true" ]]; then \
-    echo "xdebug.force_display_errors=1" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini && \
-    echo "xdebug.extended_info=1" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini && \
-    echo "xdebug.idekey=PHPSTORM" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini && \
-    echo "xdebug.log=/tmp/xdebug.log" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini && \
-    echo "xdebug.start_with_request=yes" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini && \
-    echo "xdebug.mode=debug" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini && \
-    echo "xdebug.client_host=$XDEBUG_REMOTE_HOST" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini && \
+    XDEBUG_CONFIG=$PHP_INI_DIR/conf.d/docker-php-ext-xdebug.ini &&  \
+    echo "xdebug.extended_info=1" >> $XDEBUG_CONFIG && \
+    echo "xdebug.idekey=PHPSTORM" >> $XDEBUG_CONFIG && \
+    echo "xdebug.log=/tmp/xdebug.log" >> $XDEBUG_CONFIG && \
+    echo "xdebug.mode=debug" >> $XDEBUG_CONFIG && \
+    echo "xdebug.client_host=$XDEBUG_REMOTE_HOST" >> $XDEBUG_CONFIG && \
     cp "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"; \
     fi
 
