@@ -1,7 +1,7 @@
 # testCICD
 
 1. Установить docker-compose:
-   - [Windows](https://docs.docker.com/desktop/windows/install/).
+   - [Windows](https://docs.docker.com/desktop/windows/install/)
    - Debian/Ubuntu: `sudo apt-get install docker-compose`
    - [Mac](https://docs.docker.com/desktop/mac/install/)
 3. Зайти в папку с проектом
@@ -11,7 +11,7 @@
 Сайт будет доступен по адресу http://127.0.0.1:888/. 
 Порт меняется в [.env](.env) `NGINX_PORT`
 
-###Прочие инструкции
+### Прочие инструкции
 - [Тестирование](docs/tests.md)
 - [Настройка xdebug](docs/debug.md)
 - [Прочее](docs/useful_commands.md)
