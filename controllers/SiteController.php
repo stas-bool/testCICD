@@ -133,4 +133,10 @@ class SiteController extends Controller
     {
         return $this->render('test');
     }
+
+    public function actionApi()
+    {
+        $this->response->format = Response::FORMAT_JSON;
+        return ['branch' => 'patch-1'];
+    }
 }
