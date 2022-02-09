@@ -131,6 +131,6 @@ class SiteController extends Controller
 
     public function actionTest()
     {
-        return 'Hello world:)';
+        return $this->render('test');
     }
 }
