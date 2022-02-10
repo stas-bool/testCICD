@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\Test;
 use Yii;
+use yii\db\Expression;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\Response;
@@ -131,7 +132,14 @@ class SiteController extends Controller
 
     public function actionTest()
     {
-        return $this->render('test', ['branch' => 'patch-1']);
+        $val = Test::find()->orderBy(new Expression('random()'))->one();
+        return $this->render('test', ['name' => $val->value ?? 'test']);
+    }
+
+    public function actionCreateValue($value)
+    {
+        $status = (new Test(['value' => $value]))->save() ? 'Saved' : 'Fail';
+        return $this->render('test', ['name' => $status]);
     }
 
     public function actionApi()

@@ -2,15 +2,15 @@
 
 /**
  * @var $this yii\web\View
- * @var $branch string
+ * @var $name string
  */
 
 use yii\helpers\Html;
 
-$this->title = $branch;
+$this->title = $name;
 
 ?>
 
 <div class="site-test">
-    <h1><?= 'Branch: '.Html::encode($this->title) ?></h1>
+    <h1><?= Html::encode($this->title) ?></h1>
 </div>
