@@ -14,6 +14,8 @@ services:
         XDEBUG_REMOTE_HOST: ${XDEBUG_REMOTE_HOST}
     volumes:
       - ./:/var/www/cicd:rw
+    networks:
+      - default
   postgres:
     container_name: ${APP_NAME}_postgres
     env_file:
@@ -25,6 +27,10 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_DB: ${DB_NAME}
+    networks:
+      - default
+    ports:
+      - "${POSTGRES_PORT:-0}:5432"
   nginx:
     container_name: ${APP_NAME}_nginx
     hostname: ${APP_NAME}_nginx
@@ -36,6 +42,19 @@ services:
       - ./docker/postgres/dump:/docker-entrypoint-initdb.d
     links:
       - app
+    env_file:
+      - .env
+    ports:
+      - "${NGINX_PORT:-0}:80"
+    expose:
+      - "80"
+    networks:
+      - default
 
 volumes:
   pgdata:
+
+networks:
+  default:
+    external: false
+    name: ${NETWORK}

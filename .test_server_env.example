@@ -2,14 +2,14 @@ APP_NAME=cicd
 
 POSTGRES_HOST=${APP_NAME}_postgres
 # Порт по которому база будет доступна на хосте
-POSTGRES_PORT=5433
+POSTGRES_PORT=
 POSTGRES_PASSWORD=cicd
 POSTGRES_USER=cicd
 DB_NAME=cicd
 
-NGINX_PORT=888
+NGINX_PORT=
 
-XDEBUG_REMOTE_HOST=host.docker.internal
+XDEBUG_REMOTE_HOST=
 #true or false
 DEBUG=false
 #see \Yii\BaseYii.php
@@ -17,4 +17,5 @@ ENV=dev
 
 # Для $config['modules']['debug']['allowedIPs']
 LOCAL_IP=172.*.*.*
+# ⬇️ ⚠️ Не менять ⚠️ ⬇️
 NETWORK=container_network
