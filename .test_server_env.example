@@ -1,6 +1,12 @@
-APP_NAME=cicd
+# Должно быть <branch>_<project>
+APP_NAME=
 
-POSTGRES_HOST=${APP_NAME}_postgres
+# Должно быть <branch>.<project>.<url>
+# Пока url=dev.biche-ool.ru
+VIRTUAL_HOST=
+
+# Должно быть <branch>_<project>_postgres
+POSTGRES_HOST=
 # Порт по которому база будет доступна на хосте
 POSTGRES_PORT=
 POSTGRES_PASSWORD=cicd
