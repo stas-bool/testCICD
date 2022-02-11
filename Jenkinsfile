@@ -5,6 +5,7 @@ pipeline {
             steps {
                 sh 'envsubst < .build.env > .env'
                 sh 'cat .env'
+                sh 'env'
             }
         }
     }
