@@ -12,7 +12,7 @@ jobs:
       - name: Install dependencies
         uses: php-actions/composer@master
         with:
-          php_version: 7.4
+          php_version: 8.0
           version: 2
           command: update
 #      - name: Tests
