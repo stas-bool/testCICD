@@ -12,8 +12,8 @@ pipeline {
                 sh 'envsubst < .build.env > .env'
                 sh 'docker-compose build'
                 sh 'docker-compose up -d'
-                sh 'docker exec --ti -u www-data composer install'
-                sh 'docker exec --ti -u www-data php yii migrate --interactive=0'
+                sh 'docker exec -ti -u www-data composer install'
+                sh 'docker exec -ti -u www-data php yii migrate --interactive=0'
             }
         }
     }
