@@ -153,4 +153,10 @@ class SiteController extends Controller
         $allValues = Test::find()->all();
         return $this->render('list', ['list' => $allValues]);
     }
+
+    public function actionDelete($id)
+    {
+        $result = Test::deleteAll(['id' => $id]);
+        return $this->render('test', ['name' => "Deleted: $result records"]);
+    }
 }
