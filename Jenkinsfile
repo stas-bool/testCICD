@@ -14,8 +14,8 @@ pipeline {
                 sh 'docker-compose build'
                 sh 'docker-compose up -d'
                 sh 'env'
-                sh "docker exec -ti -u www-data $APP_CONTAINER_NAME composer install"
-                sh "docker exec -ti -u www-data $APP_CONTAINER_NAME php yii migrate --interactive=0"
+                sh "docker exec -i -u www-data $APP_CONTAINER_NAME composer install"
+                sh "docker exec -i -u www-data $APP_CONTAINER_NAME php yii migrate --interactive=0"
             }
         }
     }
