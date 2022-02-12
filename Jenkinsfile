@@ -12,7 +12,8 @@ pipeline {
                 sh 'envsubst < .build.env > .env'
                 sh 'cat .env'
                 sh 'env'
-                sh 'docker-compose up -d --build'
+                sh 'docker-compose build --no-cache'
+                sh 'docker-compose up -d'
             }
         }
     }
