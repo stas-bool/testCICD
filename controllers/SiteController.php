@@ -136,7 +136,7 @@ class SiteController extends Controller
         return $this->render('test', ['name' => $val->value ?? 'test']);
     }
 
-    public function actionCreateValue($value)
+    public function actionCreate($value)
     {
         $status = (new Test(['value' => $value]))->save() ? 'Saved' : 'Fail';
         return $this->render('test', ['name' => $status]);
