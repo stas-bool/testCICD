@@ -4,7 +4,8 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    env.REPOSITORY_NAME_LOWER_CASE = env.GIT_URL.replaceFirst(/^.*\/([^\/]+?).git$/, '$1').toLowerCase()
+                    env.REPOSITORY_NAME = env.GIT_URL.replaceFirst(/^.*\/([^\/]+?).git$/, '$1')
+                    env.REPOSITORY_NAME_LOWER_CASE = env.REPOSITORY_NAME.toLowerCase()
                     env.BRANCH_NAME_LOWER_CASE = env.BRANCH_NAME.toLowerCase()
                     env.VIRTUAL_HOST_PART = "${env.REPOSITORY_NAME_LOWER_CASE}.${env.BRANCH_NAME_LOWER_CASE}"
                 }
