@@ -147,4 +147,10 @@ class SiteController extends Controller
         $this->response->format = Response::FORMAT_JSON;
         return ['branch' => 'master'];
     }
+
+    public function actionList()
+    {
+        $allValues = Test::find()->all();
+        return $this->render('list', ['list' => $allValues]);
+    }
 }
