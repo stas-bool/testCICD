@@ -16,6 +16,8 @@ services:
       - ./:/var/www/cicd:rw
     networks:
       - default
+    depends_on:
+      - postgres
   postgres:
     container_name: ${APP_NAME}_postgres
     env_file:
@@ -40,7 +42,7 @@ services:
       - ./:/var/www/cicd:rw
       - ./docker/nginx/nginx_dev.conf:/etc/nginx/nginx.conf
       - ./docker/postgres/dump:/docker-entrypoint-initdb.d
-    links:
+    depends_on:
       - app
     env_file:
       - .env
