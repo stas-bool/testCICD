@@ -7,7 +7,7 @@ pipeline {
                     env.REPOSITORY_NAME = env.GIT_URL.replaceFirst(/^.*\/([^\/]+?).git$/, '$1')
                 }
                 sh 'env'
-                sh 'cp .example.env .env'
+                sh 'cp .build.env .env'
                 sh 'cat .env'
                 sh 'docker-compose up -d --build'
             }
