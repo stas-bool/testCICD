@@ -22,6 +22,7 @@ RUN apk update && \
     freetype-dev \
     shadow \
     sudo \
+    git \
     libzip-dev && \
     pecl install xdebug-3.1.3 && \
     docker-php-ext-configure gd --enable-gd --with-freetype && \
