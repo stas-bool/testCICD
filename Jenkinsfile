@@ -18,5 +18,13 @@ pipeline {
                 sh "docker exec -i -u www-data $APP_CONTAINER_NAME php yii migrate --interactive=0"
             }
         }
+        stage('Test') {
+            sh "docker exec -i -u www-data $APP_CONTAINER_NAME php vendor/bin/codecept run --xml"
+        }
+    }
+    post {
+        always {
+            junit 'tests/_output/*.xml'
+        }
     }
 }
