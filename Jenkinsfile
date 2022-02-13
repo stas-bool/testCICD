@@ -8,19 +8,27 @@ pipeline {
                     env.REPOSITORY_NAME_LOWER_CASE = env.REPOSITORY_NAME.toLowerCase()
                     env.FEATURE_NAME = env.BRANCH_NAME.toLowerCase().replaceFirst(/feature-/, '')
                     env.VIRTUAL_HOST_PART = "${env.FEATURE_NAME}.${env.REPOSITORY_NAME_LOWER_CASE}"
-                    env.APP_CONTAINER_NAME = "${REPOSITORY_NAME}_${BRANCH_NAME}_app"
+                    env.APP_PREFIX = "${REPOSITORY_NAME}_${BRANCH_NAME}"
+                    env.APP_CONTAINER_NAME = "${APP_PREFIX}_app"
                 }
                 sh 'envsubst < .build.env > .env'
                 sh 'docker-compose build'
                 sh 'docker-compose up -d'
-                sh 'env'
                 sh "docker exec -i -u www-data $APP_CONTAINER_NAME composer install"
                 sh "docker exec -i -u www-data $APP_CONTAINER_NAME php yii migrate --interactive=0"
             }
         }
+
         stage('Test') {
             steps {
-                sh "docker exec -i -u www-data $APP_CONTAINER_NAME php vendor/bin/codecept run --xml"
+                try {
+                    sh "docker exec -i -u www-data $APP_CONTAINER_NAME php vendor/bin/codecept run --xml"
+                }
+                catch (exc) {
+                    sh 'docker-compose stop'
+                    sh "docker container rm $(docker container ps -a | grep ${APP_PREFIX} | cut -f 1 -d ' ')"
+                    throw
+                }
             }
         }
     }
