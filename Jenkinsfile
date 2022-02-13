@@ -1,15 +1,17 @@
 pipeline {
     agent any
     stages {
+        environment {
+            REPOSITORY_NAME = GIT_URL.replaceFirst(/^.*\/([^\/]+?).git$/, '$1')
+            REPOSITORY_NAME_LOWER_CASE = REPOSITORY_NAME.toLowerCase()
+            FEATURE_NAME = BRANCH_NAME.toLowerCase().replaceFirst(/feature-/, '')
+            VIRTUAL_HOST_PART = "${FEATURE_NAME}.${REPOSITORY_NAME_LOWER_CASE}"
+            APP_PREFIX = "${REPOSITORY_NAME}_${BRANCH_NAME}"
+            APP_CONTAINER_NAME = "${APP_PREFIX}_app"
+        }
         stage('Build') {
             steps {
                 script {
-                    env.REPOSITORY_NAME = env.GIT_URL.replaceFirst(/^.*\/([^\/]+?).git$/, '$1')
-                    env.REPOSITORY_NAME_LOWER_CASE = env.REPOSITORY_NAME.toLowerCase()
-                    env.FEATURE_NAME = env.BRANCH_NAME.toLowerCase().replaceFirst(/feature-/, '')
-                    env.VIRTUAL_HOST_PART = "${env.FEATURE_NAME}.${env.REPOSITORY_NAME_LOWER_CASE}"
-                    env.APP_PREFIX = "${REPOSITORY_NAME}_${BRANCH_NAME}"
-                    env.APP_CONTAINER_NAME = "${APP_PREFIX}_app"
                 }
                 sh 'envsubst < .build.env > .env'
                 sh 'docker-compose build'
