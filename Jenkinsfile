@@ -22,11 +22,11 @@ pipeline {
         stage('Test') {
             steps {
                 try {
-                    sh "docker exec -i -u www-data $APP_CONTAINER_NAME php vendor/bin/codecept run --xml"
+                    sh "docker exec -i -u www-data ${APP_CONTAINER_NAME} php vendor/bin/codecept run --xml"
                 }
                 catch (exc) {
                     sh 'docker-compose stop'
-                    sh "docker container rm $(docker container ps -a | grep ${APP_PREFIX} | cut -f 1 -d ' ')"
+                    sh "docker container rm `docker container ps -a | grep $APP_PREFIX | cut -f 1 -d ' ')`
                     throw
                 }
             }
