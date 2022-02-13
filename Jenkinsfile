@@ -29,7 +29,8 @@ pipeline {
                     catch (exc) {
                         sh 'docker-compose stop'
 //                         sh "docker container rm \$(docker container ps -a | grep ${APP_PREFIX} | cut -f 1 -d ' ')"
-                        sh "tg-me \"Tests failed\nnew line\""
+                        env.GIT_COMMIT_MSG = sh (script: 'git log -1 --pretty=%B ${GIT_COMMIT}', returnStdout: true).trim()
+                        sh "tg-me \"Tests failed\nProject: ${REPOSITORY_NAME}\nBranch: ${BRANCH_NAME}\nCommit: ${GIT_COMMIT}\nCommit message: ${GIT_COMMIT_MSG}\""
                     }
                 }
             }
