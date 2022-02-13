@@ -19,7 +19,9 @@ pipeline {
             }
         }
         stage('Test') {
-            sh "docker exec -i -u www-data $APP_CONTAINER_NAME php vendor/bin/codecept run --xml"
+            steps {
+                sh "docker exec -i -u www-data $APP_CONTAINER_NAME php vendor/bin/codecept run --xml"
+            }
         }
     }
     post {
