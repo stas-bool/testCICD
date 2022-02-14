@@ -54,25 +54,17 @@ pipeline {
         stage('Deploy stage') {
             when { branch "stage" }
             steps {
-                script {
-                    def remote = [:]
-                    remote.name = 'production'
-                    remote.host = '10.0.0.231'
-                    remote.user = 'ubuntu'
-                    remote.allowAnyHosts = true
-                    sshCommand remote: remote, command: "cd ~/stage && git pull && \
-                                                        docker-compose restart && \
-                                                        docker exec -i -u www-data stage_cicd_app composer install && \
-                                                        docker exec -i -u www-data stage_cicd_app php yii migrate --interactive=0"
-                }
-
+                sh "ssh ubuntu@10.0.0.231 \"cd ~/stage && git pull && \
+                    docker-compose restart && \
+                    docker exec -i -u www-data cicd_app composer install && \
+                    docker exec -i -u www-data cicd_app php yii migrate --interactive=0\""
                 sh 'docker-compose stop'
             }
         }
         stage('Deploy production') {
             when { branch "master" }
             steps {
-                sh "ssh ubuntu@10.0.0.231 \"cd ~/stage && git pull && \
+                sh "ssh ubuntu@10.0.0.231 \"cd ~/prod && git pull && \
                     docker-compose restart && \
                     docker exec -i -u www-data cicd_app composer install && \
                     docker exec -i -u www-data cicd_app php yii migrate --interactive=0\""
