@@ -6,7 +6,7 @@ pipeline {
                 script {
                     env.REPOSITORY_NAME = env.GIT_URL.replaceFirst(/^.*\/([^\/]+?).git$/, '$1')
                     env.REPOSITORY_NAME_LOWER_CASE = env.REPOSITORY_NAME.toLowerCase()
-                    env.FEATURE_NAME = env.BRANCH_NAME.toLowerCase().replaceFirst(/feature-/, '')
+                    env.FEATURE_NAME = env.BRANCH_NAME.toLowerCase().replaceFirst(/feature\//, '')
                     env.VIRTUAL_HOST_PART = "${env.FEATURE_NAME}.${env.REPOSITORY_NAME_LOWER_CASE}"
                     env.APP_PREFIX = "${REPOSITORY_NAME}_${BRANCH_NAME}"
                     env.APP_CONTAINER_NAME = "${APP_PREFIX}_app"
@@ -30,7 +30,12 @@ pipeline {
                         sh 'docker-compose stop'
 //                         sh "docker container rm \$(docker container ps -a | grep ${APP_PREFIX} | cut -f 1 -d ' ')"
                         env.GIT_COMMIT_MSG = sh (script: 'git log -1 --pretty=%B ${GIT_COMMIT}', returnStdout: true).trim()
-                        sh "tg-me \"Tests failed\nProject: ${REPOSITORY_NAME}\nBranch: ${BRANCH_NAME}\nCommit: ${GIT_COMMIT}\nCommit message: ${GIT_COMMIT_MSG}\""
+                        sh "tg-me \"
+                        [**Tests failed**](${BUILD_URL})\n
+                        **Project**: [${REPOSITORY_NAME}](${GIT_URL})\n
+                        **Branch**: ${BRANCH_NAME}\n
+                        **Changes**: [Url](${RUN_CHANGES_DISPLAY_URL})\n
+                        \""
                     }
                 }
             }
