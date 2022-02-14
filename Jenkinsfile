@@ -31,7 +31,7 @@ pipeline {
 //                         sh "docker container rm \$(docker container ps -a | grep ${APP_PREFIX} | cut -f 1 -d ' ')"
                         env.GIT_COMMIT_MSG = sh (script: 'git log -1 --pretty=%B ${GIT_COMMIT}', returnStdout: true).trim()
                         // Отправка уведомления в telegram
-                        sh "tg-me \"Tests failed\n[Build](${BUILD_URL})"
+                        sh "tg-me \"Tests failed\n[Build](${BUILD_URL})\""
                     }
                 }
             }
