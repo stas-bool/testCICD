@@ -146,7 +146,7 @@ class SiteController extends Controller
     public function actionApi()
     {
         $this->response->format = Response::FORMAT_JSON;
-        return ['branch' => 'master'];
+        return ['branch' => 'stage'];
     }
 
     public function actionList()
