@@ -1,6 +1,7 @@
 pipeline {
     agent any
     stages {
+        // Стадия сборки
         stage('Build') {
             steps {
                 script {
@@ -11,26 +12,31 @@ pipeline {
                     env.APP_PREFIX = "${REPOSITORY_NAME}_${BRANCH_NAME}"
                     env.APP_CONTAINER_NAME = "${APP_PREFIX}_app"
                 }
+                // Замена переменных в файле из окружения
                 sh 'envsubst < .build.env > .env'
-                sh 'env'
+                // Сборка контейнера
                 sh 'docker-compose build'
+                // Запуск контейнера
                 sh 'docker-compose up -d'
+                // Установка зависимостей
                 sh "docker exec -i -u www-data $APP_CONTAINER_NAME composer install"
+                // Применение миграций
                 sh "docker exec -i -u www-data $APP_CONTAINER_NAME php yii migrate --interactive=0"
             }
         }
-
+        // Стадия тестирования
         stage('Test') {
             steps {
                 script {
                     try {
+                        // Запуск тестов в контейнере
                         sh "docker exec -i -u www-data ${APP_CONTAINER_NAME} php vendor/bin/codecept run --xml"
                     }
                     catch (exc) {
+                        // Если тесты не прошли
+                        // Остановить контейнер
                         sh 'docker-compose stop'
-//                         sh "docker container rm \$(docker container ps -a | grep ${APP_PREFIX} | cut -f 1 -d ' ')"
-                        env.GIT_COMMIT_MSG = sh (script: 'git log -1 --pretty=%B ${GIT_COMMIT}', returnStdout: true).trim()
-                        // Отправка уведомления в telegram
+                        // Отправить уведомление в telegram с ссылкой на сборку
                         sh "tg-me \"Tests failed\n[Build](${BUILD_URL})\""
                     }
                 }
@@ -38,7 +44,9 @@ pipeline {
         }
     }
     post {
+        // Выполняется всегда. Даже если сборка на удалась
         always {
+            // Результаты тестов
             junit 'tests/_output/*.xml'
         }
     }
