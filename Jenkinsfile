@@ -1,9 +1,6 @@
 pipeline {
     agent any
     stages {
-        def remote = [:]
-        remote.host = '10.0.0.231'
-        remote.user = 'ubuntu'
         // Стадия сборки
         stage('Build') {
             steps {
@@ -57,6 +54,12 @@ pipeline {
         stage('Deploy stage') {
             when { branch "stage" }
             steps {
+                script {
+                    def remote = [:]
+                    remote.host = '10.0.0.231'
+                    remote.user = 'ubuntu'
+                }
+
                 sh 'docker-compose stop'
                 sshCommand remote: remote, command: "cd ~/stage && git pull && docker-compose restart"
                 sshCommand remote: remote, command: "docker exec -i -u www-data stage_cicd_app composer install"
@@ -66,6 +69,11 @@ pipeline {
         stage('Deploy production') {
             when { branch "master" }
             steps {
+                script {
+                    def remote = [:]
+                    remote.host = '10.0.0.231'
+                    remote.user = 'ubuntu'
+                }
                 sh 'docker-compose stop'
                 sshCommand remote: remote, command: "cd ~/prod && git pull && docker-compose restart"
                 sshCommand remote: remote, command: "docker exec -i -u www-data cicd_app composer install"
@@ -73,7 +81,7 @@ pipeline {
             }
         }
         stage('Other branches') {
-            when { branch pattern: "^(?!stage|master|feature\/[\w\-_]*).*", comparator: "REGEXP" }
+            when { branch pattern: '^(?!stage|master|feature\\/[\\w\\-_]*).*', comparator: "REGEXP" }
             steps {
                 echo 'Other branches'
                 sh 'docker-compose stop'
