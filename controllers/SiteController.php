@@ -7,6 +7,7 @@ use Yii;
 use yii\db\Expression;
 use yii\filters\AccessControl;
 use yii\web\Controller;
+use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
@@ -158,5 +159,17 @@ class SiteController extends Controller
     {
         $result = Test::deleteAll(['id' => $id]);
         return $this->render('test', ['name' => "Deleted: $result records"]);
+    }
+
+    public function actionUpdate($id, $newValue)
+    {
+        $value = Test::findOne($id);
+        if (is_null($value)) {
+            throw new NotFoundHttpException("Значение не найдено");
+        }
+        $value->value = $newValue;
+
+        $status = $value->save() ? 'Saved' : 'Fail';
+        return $this->render('test', ['name' => $status]);
     }
 }
