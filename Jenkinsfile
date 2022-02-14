@@ -78,6 +78,7 @@ pipeline {
                     remote.host = '10.0.0.231'
                     remote.user = 'ubuntu'
                     remote.allowAnyHosts = true
+                    remote.identityFile = identity
                     sshCommand remote: remote, command: "cd ~/stage && git pull && \
                                                         docker-compose restart && \
                                                         docker exec -i -u www-data cicd_app composer install && \
