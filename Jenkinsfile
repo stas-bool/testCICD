@@ -58,12 +58,13 @@ pipeline {
                     def remote = [:]
                     remote.host = '10.0.0.231'
                     remote.user = 'ubuntu'
+                    sshCommand remote: remote, command: "cd ~/stage && git pull && \
+                                                        docker-compose restart && \
+                                                        docker exec -i -u www-data stage_cicd_app composer install && \
+                                                        docker exec -i -u www-data stage_cicd_app php yii migrate --interactive=0"
                 }
 
                 sh 'docker-compose stop'
-                sshCommand remote: remote, command: "cd ~/stage && git pull && docker-compose restart"
-                sshCommand remote: remote, command: "docker exec -i -u www-data stage_cicd_app composer install"
-                sshCommand remote: remote, command: "docker exec -i -u www-data stage_cicd_app php yii migrate --interactive=0"
             }
         }
         stage('Deploy production') {
@@ -73,11 +74,12 @@ pipeline {
                     def remote = [:]
                     remote.host = '10.0.0.231'
                     remote.user = 'ubuntu'
+                    sshCommand remote: remote, command: "cd ~/stage && git pull && \
+                                                        docker-compose restart && \
+                                                        docker exec -i -u www-data cicd_app composer install && \
+                                                        docker exec -i -u www-data cicd_app php yii migrate --interactive=0"
                 }
                 sh 'docker-compose stop'
-                sshCommand remote: remote, command: "cd ~/prod && git pull && docker-compose restart"
-                sshCommand remote: remote, command: "docker exec -i -u www-data cicd_app composer install"
-                sshCommand remote: remote, command: "docker exec -i -u www-data cicd_app php yii migrate --interactive=0"
             }
         }
         stage('Other branches') {
