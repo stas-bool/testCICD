@@ -30,12 +30,11 @@ pipeline {
                         sh 'docker-compose stop'
 //                         sh "docker container rm \$(docker container ps -a | grep ${APP_PREFIX} | cut -f 1 -d ' ')"
                         env.GIT_COMMIT_MSG = sh (script: 'git log -1 --pretty=%B ${GIT_COMMIT}', returnStdout: true).trim()
-                        sh "tg-me \"
-                        [**Tests failed**](${BUILD_URL})\n
-                        **Project**: [${REPOSITORY_NAME}](${GIT_URL})\n
-                        **Branch**: ${BRANCH_NAME}\n
-                        **Changes**: [Url](${RUN_CHANGES_DISPLAY_URL})\n
-                        \""
+                        sh "tg-me \"" +
+                        "[**Tests failed**](${BUILD_URL})\n" +
+                        "**Project**: [${REPOSITORY_NAME}](${GIT_URL})\n" +
+                        "**Branch**: ${BRANCH_NAME}\n" +
+                        "**Changes**: [Url](${RUN_CHANGES_DISPLAY_URL})\""
                     }
                 }
             }
