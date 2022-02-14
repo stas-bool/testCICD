@@ -1,6 +1,9 @@
 pipeline {
     agent any
     stages {
+        def remote = [:]
+        remote.host = '10.0.0.231'
+        remote.user = 'ubuntu'
         // Стадия сборки
         stage('Build') {
             steps {
@@ -43,9 +46,37 @@ pipeline {
                 }
             }
         }
-        stage('Deploy') {
+        stage('Deploy feature') {
+            when { branch pattern: "feature/*", comparator: "REGEXP"}
             steps {
-                echo 'Pass'
+                // Перезапуск прокси
+                sh 'docker stop myproxy'
+                sh 'docker run --name=myproxy -p 80:80 -v /var/run/docker.sock:/tmp/docker.sock -t --rm --network=container_network -d jwilder/nginx-proxy'
+            }
+        }
+        stage('Deploy stage') {
+            when { branch "stage" }
+            steps {
+                sh 'docker-compose stop'
+                sshCommand remote: remote, command: "cd ~/stage && git pull && docker-compose restart"
+                sshCommand remote: remote, command: "docker exec -i -u www-data stage_cicd_app composer install"
+                sshCommand remote: remote, command: "docker exec -i -u www-data stage_cicd_app php yii migrate --interactive=0"
+            }
+        }
+        stage('Deploy production') {
+            when { branch "master" }
+            steps {
+                sh 'docker-compose stop'
+                sshCommand remote: remote, command: "cd ~/prod && git pull && docker-compose restart"
+                sshCommand remote: remote, command: "docker exec -i -u www-data cicd_app composer install"
+                sshCommand remote: remote, command: "docker exec -i -u www-data cicd_app php yii migrate --interactive=0"
+            }
+        }
+        stage('Other branches') {
+            when { branch pattern: "^(?!stage|master|feature\/[\w\-_]*).*", comparator: "REGEXP" }
+            steps {
+                echo 'Other branches'
+                sh 'docker-compose stop'
             }
         }
     }
