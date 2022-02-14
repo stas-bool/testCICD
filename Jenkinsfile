@@ -14,6 +14,7 @@ pipeline {
                 }
                 // Замена переменных в файле из окружения
                 sh 'envsubst < .build.env > .env'
+                sh 'env'
                 // Сборка контейнера
                 sh 'docker-compose build'
                 // Запуск контейнера
