@@ -1,15 +1,17 @@
 <?php
 
-namespace app\tests\unit;
+namespace unit;
 
-class FailTest extends \Codeception\Test\Unit
+use Codeception\Test\Unit;
+
+class FailTest extends Unit
 {
     protected \UnitTester $tester;
 
     // tests
     public function testFail(): void
     {
-        self::fail('Тестируем падение тестов');
-//        self::assertTrue(true);
+//        self::fail('Тестируем падение тестов');
+        self::assertTrue(true);
     }
 }
