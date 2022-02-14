@@ -7,9 +7,9 @@ pipeline {
                 script {
                     env.REPOSITORY_NAME = env.GIT_URL.replaceFirst(/^.*\/([^\/]+?).git$/, '$1')
                     env.REPOSITORY_NAME_LOWER_CASE = env.REPOSITORY_NAME.toLowerCase()
-                    env.FEATURE_NAME = env.BRANCH_NAME.toLowerCase().replaceFirst(/feature\//, '')
+                    env.FEATURE_NAME = env.BRANCH_NAME.toLowerCase().replaceFirst('feature/', '')
                     env.VIRTUAL_HOST_PART = "${env.FEATURE_NAME}.${env.REPOSITORY_NAME_LOWER_CASE}"
-                    env.APP_PREFIX = "${REPOSITORY_NAME}_${BRANCH_NAME}"
+                    env.APP_PREFIX = "${REPOSITORY_NAME}_${BRANCH_NAME}".replaceAll('/', '_')
                     env.APP_CONTAINER_NAME = "${APP_PREFIX}_app"
                 }
                 // Замена переменных в файле из окружения
@@ -41,6 +41,9 @@ pipeline {
                     }
                 }
             }
+        }
+        stage('Deploy') {
+            steps {}
         }
     }
     post {
