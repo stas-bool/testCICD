@@ -59,6 +59,7 @@ pipeline {
                     remote.name = 'production'
                     remote.host = '10.0.0.231'
                     remote.user = 'ubuntu'
+                    remote.allowAnyHosts = true
                     sshCommand remote: remote, command: "cd ~/stage && git pull && \
                                                         docker-compose restart && \
                                                         docker exec -i -u www-data stage_cicd_app composer install && \
@@ -76,6 +77,7 @@ pipeline {
                     remote.name = 'production'
                     remote.host = '10.0.0.231'
                     remote.user = 'ubuntu'
+                    remote.allowAnyHosts = true
                     sshCommand remote: remote, command: "cd ~/stage && git pull && \
                                                         docker-compose restart && \
                                                         docker exec -i -u www-data cicd_app composer install && \
