@@ -43,7 +43,9 @@ pipeline {
             }
         }
         stage('Deploy') {
-            steps {}
+            steps {
+                echo 'Pass'
+            }
         }
     }
     post {
