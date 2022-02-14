@@ -3,10 +3,9 @@ FROM php:8.0-fpm-alpine3.15
 ARG DEBUG
 ARG XDEBUG_REMOTE_HOST
 ENV COMPOSER_ALLOW_SUPERUSER=1
-# Install needed packages
+# Установка программ
 RUN apk update && \
     apk upgrade && \
-    # Попробовать удалить после docker-php-ext-install
     apk add \
     postgresql-dev  \
     libxml2-dev  \
