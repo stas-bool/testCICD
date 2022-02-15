@@ -1,8 +1,8 @@
 # testCICD
 
-1. Установить docker-compose:
+1. Установить docker:
    - [Windows](https://docs.docker.com/desktop/windows/install/)
-   - Debian/Ubuntu: `sudo apt-get install docker-compose`
+   - Debian/Ubuntu: `sudo apt-get install docker docker-compose`
    - [Mac](https://docs.docker.com/desktop/mac/install/)
 2. Зайти в папку с проектом
 3. Скопировать .env.example в .env
