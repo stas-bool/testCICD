@@ -11,6 +11,6 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        Fork
+        Super awesome feature
     </p>
 </div>
