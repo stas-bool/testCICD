@@ -5,8 +5,8 @@
    - Debian/Ubuntu: `sudo apt-get install docker docker-compose`
    - [Mac](https://docs.docker.com/desktop/mac/install/)
 2. Зайти в папку с проектом
-3. Скопировать .env.example в .env
-4. Запустить `docker-compose up -d`
+3. Скопировать [.example.env](.example.env) в .env
+4. Запустить контейнер командой `docker-compose up`
 5. Установка зависимостей `docker exec -it cicd_app sh -c "composer install"`
 6. Применение миграций `docker exec -it cicd_app sh -c "php yii migrate --interactive=0"`
 
