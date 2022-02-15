@@ -45,7 +45,7 @@ pipeline {
             }
         }
         stage('Deploy feature') {
-            when { branch pattern: "feature\/.*", comparator: "REGEXP"}
+            when { branch pattern: "feature/.*", comparator: "REGEXP"}
             steps {
                 // Перезапуск прокси
                 sh 'docker stop myproxy'
