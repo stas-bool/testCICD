@@ -11,7 +11,7 @@ class FailTest extends Unit
     // tests
     public function testFail(): void
     {
-//        self::fail('Тестируем падение тестов');
-        self::assertTrue(true);
+        self::fail('Тестируем падение тестов');
+//        self::assertTrue(true);
     }
 }
