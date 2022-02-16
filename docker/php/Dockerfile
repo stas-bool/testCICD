@@ -3,6 +3,7 @@ FROM php:8.0-fpm-alpine3.15
 ARG DEBUG
 ARG XDEBUG_REMOTE_HOST
 ENV COMPOSER_ALLOW_SUPERUSER=1
+ARG REPOSITORY_NAME
 # Установка программ
 RUN apk update && \
     apk upgrade && \
@@ -45,7 +46,7 @@ RUN if [[ ${DEBUG} == "true" ]]; then \
 
 COPY ./www.conf /usr/local/etc/php-fpm.d/www.conf
 
-WORKDIR /var/www/cicd/
+WORKDIR /var/www/$REPOSITORY_NAME/
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
