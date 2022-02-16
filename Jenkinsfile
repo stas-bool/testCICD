@@ -16,7 +16,7 @@ pipeline {
                 sh 'envsubst < .build.env > .env'
                 sh 'envsubst < docker/nginx/example-vhost.conf > docker/nginx/vhost/vhost.conf'
                 // Сборка контейнера
-                sh 'docker-compose build --no-cache'
+                sh 'docker-compose build'
                 // Запуск контейнера
                 sh 'docker-compose up -d'
                 // Установка зависимостей
