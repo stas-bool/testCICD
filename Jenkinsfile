@@ -57,8 +57,8 @@ pipeline {
             steps {
                 sh "ssh ubuntu@10.0.0.231 \"cd ~/stage && git reset --hard && git pull && \
                     docker-compose restart && \
-                    docker exec -i -u www-data cicd_app composer install && \
-                    docker exec -i -u www-data cicd_app php yii migrate --interactive=0\""
+                    docker exec -i -u www-data stage_cicd_app composer install && \
+                    docker exec -i -u www-data stage_cicd_app php yii migrate --interactive=0\""
                 sh 'docker-compose stop'
             }
         }
