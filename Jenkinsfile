@@ -14,7 +14,7 @@ pipeline {
                 }
                 // Замена переменных в файле из окружения
                 sh 'envsubst < .build.env > .env'
-                sh 'envsubst \'$APP_CONTAINER_NAME$REPOSITORY_NAME\' < docker/nginx/example-vhost.conf > docker/nginx/vhosts/vhost.conf'
+                sh 'envsubst \'$APP_CONTAINER_NAME\' < docker/nginx/example-vhost.conf > docker/nginx/vhosts/vhost.conf'
                 // Сборка контейнера
                 sh 'docker-compose build'
                 // Запуск контейнера

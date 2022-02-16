@@ -13,7 +13,7 @@ services:
         DEBUG: ${DEBUG}
         XDEBUG_REMOTE_HOST: ${XDEBUG_REMOTE_HOST}
     volumes:
-      - ./:/var/www/${REPOSITORY_NAME}:rw
+      - ./:/var/www/cicd:rw
     networks:
       - default
     depends_on:
@@ -39,7 +39,7 @@ services:
     image: nginx:1.21.6-alpine
     volumes:
       - ./docker/nginx/vhosts:/etc/nginx/vhosts
-      - ./:/var/www/${REPOSITORY_NAME}:rw
+      - ./:/var/www/cicd:rw
       - ./docker/nginx/nginx_dev.conf:/etc/nginx/nginx.conf
       - ./docker/postgres/dump:/docker-entrypoint-initdb.d
     depends_on:
