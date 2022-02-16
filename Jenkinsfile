@@ -55,7 +55,7 @@ pipeline {
         stage('Deploy stage') {
             when { branch "stage" }
             steps {
-                sh "ssh ubuntu@10.0.0.231 \"cd ~/stage && git pull && \
+                sh "ssh ubuntu@10.0.0.231 \"cd ~/stage && git reset --hard && git pull && \
                     docker-compose restart && \
                     docker exec -i -u www-data cicd_app composer install && \
                     docker exec -i -u www-data cicd_app php yii migrate --interactive=0\""
@@ -65,7 +65,7 @@ pipeline {
         stage('Deploy production') {
             when { branch "master" }
             steps {
-                sh "ssh ubuntu@10.0.0.231 \"cd ~/prod && git pull && \
+                sh "ssh ubuntu@10.0.0.231 \"cd ~/prod && git reset --hard && git pull && \
                     docker-compose restart && \
                     docker exec -i -u www-data cicd_app composer install && \
                     docker exec -i -u www-data cicd_app php yii migrate --interactive=0\""
