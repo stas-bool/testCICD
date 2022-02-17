@@ -12,6 +12,7 @@ services:
       args:
         DEBUG: ${DEBUG}
         XDEBUG_REMOTE_HOST: ${XDEBUG_REMOTE_HOST}
+        APP_NAME: ${APP_NAME}
     volumes:
       - ./:/var/www/${APP_NAME}:rw
     networks:
@@ -39,11 +40,11 @@ services:
     build:
       context: docker/nginx
       dockerfile: Dockerfile
+      args:
+        APP_NAME: ${APP_NAME}
     volumes:
-      - ./docker/nginx/vhosts:/etc/nginx/vhosts
       - ./:/var/www/${APP_NAME}:rw
       - ./docker/nginx/nginx_dev.conf:/etc/nginx/nginx.conf
-      - ./docker/postgres/dump:/docker-entrypoint-initdb.d
     depends_on:
       - app
     env_file:
