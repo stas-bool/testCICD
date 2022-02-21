@@ -39,7 +39,7 @@ RUN if [[ ${DEBUG} == "true" ]]; then \
     echo "xdebug.extended_info=1" >> $XDEBUG_CONFIG && \
     echo "xdebug.idekey=PHPSTORM" >> $XDEBUG_CONFIG && \
     echo "xdebug.log=/tmp/xdebug.log" >> $XDEBUG_CONFIG && \
-    echo "xdebug.mode=debug" >> $XDEBUG_CONFIG && \
+    echo "xdebug.mode=debug,coverage" >> $XDEBUG_CONFIG && \
     echo "xdebug.client_host=$XDEBUG_REMOTE_HOST" >> $XDEBUG_CONFIG && \
     cp "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"; \
     fi
