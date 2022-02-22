@@ -11,7 +11,7 @@
 6. Применение миграций `docker exec -it cicd_app sh -c "php yii migrate --interactive=0"`
 
 Сайт будет доступен по адресу http://127.0.0.1:888/. 
-Порт меняется в [.env](.env) `NGINX_PORT`
+Порт меняется в [.env](.example.env) `NGINX_PORT`
 
 ### Прочие инструкции
 - [Тестирование](docs/tests.md)
