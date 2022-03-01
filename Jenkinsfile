@@ -47,9 +47,7 @@ pipeline {
         stage('Deploy feature') {
             when { branch pattern: "feature/.*", comparator: "REGEXP"}
             steps {
-                // Перезапуск прокси
-                sh 'docker stop myproxy'
-                sh 'docker run --name=myproxy -p 80:80 -v /var/run/docker.sock:/tmp/docker.sock -t --rm --network=container_network -d jwilder/nginx-proxy'
+                echo 'Feature branch'
             }
         }
         stage('Deploy stage') {
